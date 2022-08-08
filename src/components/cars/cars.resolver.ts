@@ -1,6 +1,7 @@
-import {Query, Resolver} from "@nestjs/graphql";
+import {Mutation, Query, Resolver, Args} from "@nestjs/graphql";
 import {CarsService} from "./cars.service";
 import {Car} from "./car.entity";
+import {NewCarInput} from "./dto/new-car.input";
 
 @Resolver()
 export class CarsResolver {
@@ -13,5 +14,12 @@ export class CarsResolver {
             .catch((err) => {
                 throw err;
             })
+    }
+
+    @Mutation((returns) => Car)
+    public async addNewCar(@Args("newCarData") newCarData: NewCarInput): Promise<Car> {
+        return await this.carsService.addCar(newCarData).catch((err) => {
+            throw err;
+        })
     }
 }
