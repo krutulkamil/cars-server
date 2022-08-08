@@ -6,6 +6,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { ComponentsModule } from "./components/components.module";
+import { Car } from "./components/cars/car.entity";
 
 @Module({
     imports: [
@@ -17,13 +18,13 @@ import { ComponentsModule } from "./components/components.module";
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
             database: process.env.DB_NAME,
-            entities: [],
+            entities: [Car],
             synchronize: true
         }),
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
-            debug: process.env.NODE_ENV === 'development' && true || false,
-            playground: process.env.NODE_ENV === 'development' && true || false,
+            debug: true,
+            playground: true,
             autoSchemaFile: true,
         }),
         ComponentsModule
